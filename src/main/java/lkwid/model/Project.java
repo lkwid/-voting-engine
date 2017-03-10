@@ -6,16 +6,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Project {
 	@Id
-	@GeneratedValue
+	@GeneratedValue	
 	private long id;
+	
+	@OneToMany(mappedBy = "project")
+	private List<Voter> voters;
+	
 	private String name;
 	private String description;	
-	@OneToMany(mappedBy = "project")
-	List<User> voters;
+	private boolean closed;
 
 	public long getId() {
 		return id;
@@ -34,6 +38,19 @@ public class Project {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public List<Voter> getVoters() {
+		return voters;
+	}
+	public void setVoters(List<Voter> voters) {
+		this.voters = voters;
+	}	
+	public boolean isClosed() {
+		return closed;
+	}
+	public void setClosed(boolean status) {
+		this.closed = status;
 	}
 	
 	@Override
@@ -68,6 +85,12 @@ public class Project {
 			return false;
 		return true;
 	}
+	@Override
+	public String toString() {
+		return "Project [id=" + id + ", name=" + name + ", description=" + description + "]";
+	}
+	
+	
 	
 		
 
