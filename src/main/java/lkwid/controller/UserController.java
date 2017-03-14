@@ -6,20 +6,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lkwid.model.Voter;
-import lkwid.service.VoterService;
+import lkwid.entity.User;
+import lkwid.service.UserService;
 
 @RestController
-@RequestMapping("/voter")
-public class VoterController {
+@RequestMapping("/user")
+public class UserController {
 	
 	@Autowired
-	private VoterService voterService;
+	private UserService userService;
 	
 	@PostMapping
-	public void newVoter(@RequestBody Voter voter) {
-		voterService.createVoter(voter);
-		
+	public void newUser(@RequestBody User user) {
+		userService.createUser(user);
 	}		
 
 }

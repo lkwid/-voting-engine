@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lkwid.dao.ProjectDao;
-import lkwid.model.Project;
+import lkwid.entity.Project;
 
 @Service
 public class ProjectService {
@@ -16,13 +16,17 @@ public class ProjectService {
 	@Autowired
 	private ProjectDao projectDao;
 	
-	public Collection<Project> getAll() {
+	public Collection<Project> getAllProjects() {
 		List<Project> projects = (List<Project>) projectDao.findAll();
 		projects.sort((p1, p2) -> p1.getName().compareTo(p2.getName()));
 		return projects;
 	}
 	
-	public List<Project> getOpen() {
+	public Project getProject(long id) {
+		return projectDao.findOne(id);
+	}
+	
+	public List<Project> getOpenProjects() {
 		List<Project> openProjects = new ArrayList<>();
 		for (Project p : projectDao.findAll()) {
 			if (!p.isClosed())

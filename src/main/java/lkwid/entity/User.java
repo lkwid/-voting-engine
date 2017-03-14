@@ -1,26 +1,24 @@
-package lkwid.model;
+package lkwid.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class Voter {
+public class User {
 	@Id
 	@GeneratedValue
-	private long id;
-
-	@OneToOne
-	@NotNull
-	private Project project;
-	
+	private long id;	
 	@NotEmpty
 	private String name;
 	@NotEmpty
-	private String surname;	
-	@NotEmpty
-	private boolean vote;
+	private String surname;
+	
+	@OneToOne
+	private Vote vote;
 	
 	public long getId() {
 		return id;
@@ -40,17 +38,11 @@ public class Voter {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public Project getProject() {
-		return project;
-	}
-	public void setProject(Project project) {
-		this.project = project;
-	}
-	public boolean isVote() {
+	public Vote getVoting() {
 		return vote;
 	}
-	public void setVote(boolean vote) {
+	public void setVoting(Vote vote) {
 		this.vote = vote;
-	}	
+	}
 
 }
