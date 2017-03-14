@@ -12,12 +12,11 @@ public class Vote {
 	@GeneratedValue
 	private long id;
 	@NotNull
-	private boolean voting;
+	private Boolean voting;
 		
 	@OneToOne
 	@NotNull
-	private User user;
-	
+	private User user;	
 	@OneToOne
 	@NotNull
 	private Project project;
@@ -28,10 +27,10 @@ public class Vote {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public boolean isVoting() {
+	public Boolean isVoting() {
 		return voting;
 	}
-	public void setVoting(boolean voting) {
+	public void setVoting(Boolean voting) {
 		this.voting = voting;
 	}
 	public User getUser() {

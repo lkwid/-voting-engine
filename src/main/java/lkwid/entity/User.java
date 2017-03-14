@@ -18,7 +18,16 @@ public class User {
 	private String surname;
 	
 	@OneToOne
-	private Vote vote;
+	private Vote vote;		
+	
+	public User() {
+	}
+	
+	public User(long id, String name, String surname) {
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+	}
 	
 	public long getId() {
 		return id;
@@ -38,10 +47,10 @@ public class User {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public Vote getVoting() {
+	public Vote getVote() {
 		return vote;
 	}
-	public void setVoting(Vote vote) {
+	public void setVote(Vote vote) {
 		this.vote = vote;
 	}
 

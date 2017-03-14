@@ -1,5 +1,7 @@
 package lkwid.service;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,16 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import lkwid.ClosedProjectException;
 import lkwid.entity.Project;
 import lkwid.entity.User;
 import lkwid.entity.Vote;
+import lkwid.exception.ClosedProjectException;
+import lkwid.exception.UserVotedException;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class VoteServiceTest {		
-	private User user;
+	private User newUser;
+	private User sameUser;
 	private Project openProject;
 	private Project closedProject;
 		
@@ -30,37 +34,49 @@ public class VoteServiceTest {
 	
 	@Before
 	public void setUp() {		
-		user = userService.getUser(1L);				
+		long maxId = userService.getAllUsers().size();		
+		newUser = new User(++maxId, "Test", "Testowy");
+		sameUser = userService.getUser(1);
 		openProject = projectService.getProject(1L);
 		closedProject = projectService.getProject(4L);
 	}
 	
 	@Test
-	public void saveVote() throws ClosedProjectException {
+	public void createNewVote() throws ClosedProjectException, UserVotedException {
 		Vote vote = new Vote();
+		vote.setUser(newUser);
 		vote.setProject(openProject);
-		vote.setUser(user);
 		vote.setVoting(true);
 		voteService.vote(vote);
-	}
-	
-	@Test
-	public void shouldReturnNotNull() throws ClosedProjectException {
-		Vote vote = new Vote();
-		vote.setProject(openProject);
-		vote.setUser(user);
-		vote.setVoting(true);
-		voteService.vote(vote);
-		Assert.assertNotNull(voteService.getAllVotes());
+		Assert.assertNotNull(vote);
 	}
 	
 	@Test(expected = ClosedProjectException.class)
-	public void shouldReturnClosedProjectException() throws ClosedProjectException {
-		Vote vote = new Vote();
+	public void shouldReturnClosedProjectException() throws ClosedProjectException, UserVotedException {
+		Vote vote = new Vote();		
 		vote.setProject(closedProject);
-		vote.setUser(user);
+		vote.setUser(newUser);
 		vote.setVoting(true);
 		voteService.vote(vote);
+	}
+	
+	@Test(expected = UserVotedException.class)
+	public void shouldReturnUserVotedException() throws ClosedProjectException, UserVotedException {
+		Vote vote = new Vote();		
+		vote.setProject(openProject);
+		vote.setUser(sameUser);
+		vote.setVoting(false);
+		voteService.vote(vote);
+		Assert.assertNull(vote);
+	}
+	
+	@Test(expected = ConstraintViolationException.class)
+	public void missingVotingShouldReturnNull() throws ClosedProjectException, UserVotedException {
+		Vote vote = new Vote();	
+		vote.setUser(newUser);
+		vote.setProject(openProject);		
+		voteService.vote(vote);
+		Assert.assertNull(vote);		
 	}
 
 }
