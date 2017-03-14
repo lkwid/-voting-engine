@@ -1,6 +1,9 @@
 package lkwid.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Voter {
@@ -9,10 +12,14 @@ public class Voter {
 	private long id;
 
 	@OneToOne
+	@NotNull
 	private Project project;
 	
-	private String name;	
-	private String surname;
+	@NotEmpty
+	private String name;
+	@NotEmpty
+	private String surname;	
+	@NotEmpty
 	private boolean vote;
 	
 	public long getId() {
