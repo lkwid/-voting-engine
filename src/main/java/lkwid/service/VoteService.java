@@ -22,15 +22,12 @@ public class VoteService {
 		return voteDao.findAll();
 	}
 
-	public Vote getVote(long id) {
-		return voteDao.findOne(id);
-	}
-
 	public void vote(Vote vote) throws ClosedProjectException {
 		Project project = projectService.getProject(vote.getProject().getId());		
 		if (project.isClosed())
 			throw new ClosedProjectException();		
 		else
 			voteDao.save(vote);		
-	}
+	}	
+	
 }

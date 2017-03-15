@@ -23,7 +23,7 @@ public class VoteController {
 	@GetMapping
 	public Collection<Vote> showAllVotes() {
 		return voteService.getAllVotes();
-	}
+	}	
 	
 	@PostMapping
 	public void vote(@RequestBody Vote vote) throws ClosedProjectException {

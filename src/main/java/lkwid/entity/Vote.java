@@ -3,6 +3,7 @@ package lkwid.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -12,11 +13,11 @@ public class Vote {
 	@GeneratedValue
 	private long id;
 	@NotNull
-	private Boolean voting;
+	private Boolean votingResult;
 		
 	@OneToOne
 	private User user;	
-	@OneToOne	
+	@ManyToOne	
 	private Project project;
 	
 	public long getId() {
@@ -25,11 +26,11 @@ public class Vote {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Boolean isVoting() {
-		return voting;
+	public Boolean getVotingResult() {
+		return votingResult;
 	}
-	public void setVoting(Boolean voting) {
-		this.voting = voting;
+	public void setVotingResult(Boolean votingResult) {
+		this.votingResult = votingResult;
 	}
 	public User getUser() {
 		return user;

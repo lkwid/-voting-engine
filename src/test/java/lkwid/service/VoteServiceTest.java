@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import lkwid.entity.Project;
@@ -32,34 +33,39 @@ public class VoteServiceTest {
 	
 	@Before
 	public void setUp() {		
-		newUser = new User("Test", "Testowy");
-		userService.createUser(newUser);		
+		newUser = new User("Test", "Testowy");			
 		openProject = projectService.getProject(1L);
 		closedProject = projectService.getProject(4L);
 	}
 	
-	@Test
+	@Test	
+	@Rollback(true)
 	public void createNewVote() throws ClosedProjectException {
 		Vote vote = new Vote();
+		userService.createUser(newUser);
 		vote.setUser(newUser);
 		vote.setProject(openProject);
-		vote.setVoting(true);
+		vote.setVotingResult(true);
 		voteService.vote(vote);
 		Assert.assertNotNull(vote);
 	}
 	
 	@Test(expected = ClosedProjectException.class)
+	@Rollback(true)
 	public void shouldReturnClosedProjectException() throws ClosedProjectException {
 		Vote vote = new Vote();		
+		userService.createUser(newUser);
 		vote.setProject(closedProject);
 		vote.setUser(newUser);
-		vote.setVoting(true);
+		vote.setVotingResult(true);
 		voteService.vote(vote);
 	}
 	
 	@Test(expected = ConstraintViolationException.class)
+	@Rollback(true)
 	public void missingVotingShouldReturnNull() throws ClosedProjectException {
 		Vote vote = new Vote();	
+		userService.createUser(newUser);
 		vote.setUser(newUser);
 		vote.setProject(openProject);		
 		voteService.vote(vote);

@@ -1,8 +1,13 @@
 package lkwid.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Project {
@@ -13,6 +18,9 @@ public class Project {
 	private String description;	
 	private boolean closed;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "project")
+	private List<Vote> votes;
 
 	public long getId() {
 		return id;
@@ -39,13 +47,16 @@ public class Project {
 		this.closed = status;
 	}	
 
+	public List<Vote> getVotes() {
+		return votes;
+	}
+	public void setVotes(List<Vote> votes) {
+		this.votes = votes;
+	}
+	
 	@Override
 	public String toString() {
 		return "Project [id=" + id + ", name=" + name + ", description=" + description + "]";
-	}
-	
-	
-	
-		
+	}		
 
 }
