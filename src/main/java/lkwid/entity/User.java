@@ -3,7 +3,6 @@ package lkwid.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -17,14 +16,12 @@ public class User {
 	@NotEmpty
 	private String surname;
 	
-	@OneToOne
-	private Vote vote;		
+	
 	
 	public User() {
 	}
 	
-	public User(long id, String name, String surname) {
-		this.id = id;
+	public User(String name, String surname) {	
 		this.name = name;
 		this.surname = surname;
 	}
@@ -47,11 +44,6 @@ public class User {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public Vote getVote() {
-		return vote;
-	}
-	public void setVote(Vote vote) {
-		this.vote = vote;
-	}
+
 
 }

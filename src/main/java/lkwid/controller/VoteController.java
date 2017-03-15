@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lkwid.entity.Vote;
 import lkwid.exception.ClosedProjectException;
-import lkwid.exception.UserVotedException;
 import lkwid.service.VoteService;
 
 @RestController
@@ -27,7 +26,7 @@ public class VoteController {
 	}
 	
 	@PostMapping
-	public void vote(@RequestBody Vote vote) throws ClosedProjectException, UserVotedException {
+	public void vote(@RequestBody Vote vote) throws ClosedProjectException {
 		voteService.vote(vote);
 	}
 

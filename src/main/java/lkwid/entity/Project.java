@@ -3,7 +3,6 @@ package lkwid.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Project {
@@ -14,8 +13,6 @@ public class Project {
 	private String description;	
 	private boolean closed;
 	
-	@OneToOne
-	private Vote vote;	
 
 	public long getId() {
 		return id;
@@ -41,13 +38,7 @@ public class Project {
 	public void setClosed(boolean status) {
 		this.closed = status;
 	}	
-	
-	public Vote getVoting() {
-		return vote;
-	}
-	public void setVoting(Vote vote) {
-		this.vote = vote;
-	}
+
 	@Override
 	public String toString() {
 		return "Project [id=" + id + ", name=" + name + ", description=" + description + "]";

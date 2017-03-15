@@ -15,10 +15,8 @@ public class Vote {
 	private Boolean voting;
 		
 	@OneToOne
-	@NotNull
 	private User user;	
-	@OneToOne
-	@NotNull
+	@OneToOne	
 	private Project project;
 	
 	public long getId() {
